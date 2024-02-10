@@ -1,10 +1,12 @@
 # Define the path one time
-testpath="notfound"
+testpath="/Users/radosvetm/Dev/learning/fuzzetha/tests"
 
 installImage() {
     SCRIPT=$(readlink -f "$0")              # Get the absolute path of the script
+    echo $SCRIPT
     SCRIPT_NAME=$(basename "$SCRIPT")       # Get the name of the script without the path
-    SCRIPT_NAME_LINK="${SCRIPT_NAME::-3}"
+    echo $SCRIPT_NAME
+    SCRIPT_NAME_LINK=$SCRIPT_NAME # "${SCRIPT_NAME::-3}"
 
     if [ "$SCRIPT" != "/usr/bin/$SCRIPT_NAME" ]; then
       sudo ln -s "$SCRIPT" "/usr/bin/$SCRIPT_NAME_LINK"
@@ -124,6 +126,7 @@ if [ "$SCRIPT_NAME" = "dtf.sh" ]; then
       dockerwdir="/"
     fi
 
+    echo $testpath
     docker run --entrypoint /usr/bin/tfinit.sh -it -w $dockerwdir -e ETHEREUMJS_PATH=/ethereumjs -e PYSPECS_PATH=/execution-spec-tests -v $testpath:/tests retesteth $argstring
     exit 0
 fi
